@@ -1,0 +1,32 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+stack <int> stck;
+
+template<typename T>
+T search(stack <T> stck, int id) {
+	stack <T> stck2(stck);
+	for (int i = 0; i < id-1; i++) {
+		stck2.pop();
+	}
+	return stck2.top();
+}
+
+int main()
+{
+	for (int i = 0; i < 10; i++) {
+		stck.push(rand() % 100 + 1);
+	}
+
+	int count = 0;
+
+	for (int i = 0; i < 10; i++) {
+		if (stck.top() % 2 == 0) {
+			count++;
+		}
+		stck.pop();
+	}
+	cout << count << endl;
+}
