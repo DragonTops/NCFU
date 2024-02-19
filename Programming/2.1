@@ -1,0 +1,78 @@
+#include <iostream>
+
+using namespace std;
+
+template <typename T>
+class betterStack {
+public:
+    betterStack() {
+        data = NULL;
+        prev = 0;
+    }
+    betterStack(T newData, betterStack* newPrev) {
+        data = newData;
+        prev = newPrev;
+    }
+    betterStack(betterStack* newStack) {
+        int buffSize = newStack->size();
+        betterStack* oldcurrent = newStack;
+        for (int i = 0; i < buffSize; i++) {
+            this->push(oldcurrent->data);
+            oldcurrent = oldcurrent->prev;
+        }
+    }
+
+    void push(T newData) {
+        betterStack* buff = new betterStack(data, prev);
+        data = newData;
+        prev = buff;
+    }
+    void pop() {
+            betterStack* buff = prev->prev;
+            data = prev->data;
+            delete prev;
+            prev = buff;
+    }
+    int size() {
+        return size(0) - 1;
+    }
+    T top() {
+        return data;
+    }
+private:
+    int size(int step) {
+        if (prev == 0) {
+            return step + 1;
+        }
+        else {
+            return prev->size(step + 1);
+        }
+    }
+    T data;
+    betterStack* prev;
+};
+
+int main()
+{
+    betterStack<int> stack;
+    stack.push(-5);
+    stack.push(3);
+    stack.push(-4);
+    stack.push(5);
+    betterStack<int>* buff = new betterStack<int>(&stack);
+    int buffSize = stack.size();
+    for (int i = 0; i < buffSize; i++) {
+        cout << buff->top() << endl;
+        buff->pop();
+    }
+    delete buff;
+    stack.pop();
+    stack.push(10);
+    buff = new betterStack<int>(stack);
+    buffSize = stack.size();
+    for (int i = 0; i < buffSize; i++) {
+        cout << buff->top() << endl;
+        buff->pop();
+    }
+    delete buff;
+}
