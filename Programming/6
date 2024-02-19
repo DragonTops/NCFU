@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    vector<int> vect, buff, buff2;
+
+    for (int i = 0; i < 20; i++) {
+        vect.push_back(i);
+    }
+    for (int i = 0; i < 20; i++) {
+        if (vect.at(i) %2) {
+            buff2.push_back(vect.at(i));
+        }
+        else {
+            buff.push_back(vect.at(i));
+        }
+    }
+    vect.clear();
+    for (auto i : buff2) {
+        vect.push_back(i);
+    }
+    for (auto i : buff) {
+        vect.push_back(i);
+    }
+    for (auto i : vect) {
+        cout << i << endl;
+    }
+
+}
