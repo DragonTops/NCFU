@@ -1,0 +1,91 @@
+#include <iostream>
+
+using namespace std;
+
+template <typename T>
+class betterStack {
+public:
+    betterStack() {
+        prev = 0;
+    }
+    betterStack(T newData, betterStack* newPrev) {
+        data = newData;
+        prev = newPrev;
+    }
+    betterStack(betterStack* newStack) {
+        int buffSize = newStack->size();
+        betterStack* oldcurrent = newStack;
+        for (int i = 0; i < buffSize; i++) {
+            this->push(oldcurrent->data);
+            oldcurrent = oldcurrent->prev;
+        }
+    }
+
+    void push(T newData) {
+        betterStack* buff = new betterStack(data, prev);
+        data = newData;
+        prev = buff;
+    }
+    void pop() {
+            betterStack* buff = prev->prev;
+            data = prev->data;
+            delete prev;
+            prev = buff;
+    }
+    int size() {
+        return size(0) - 1;
+    }
+    T top() {
+        return data;
+    }
+private:
+    int size(int step) {
+        if (prev == 0) {
+            return step + 1;
+        }
+        else {
+            return prev->size(step + 1);
+        }
+    }
+    T data;
+    betterStack* prev;
+};
+
+int main()
+{
+    betterStack<int> P12;
+    for (int i = 10; i > 0; i--) P12.push(i);
+
+    betterStack<int> P34;
+    for (int i = 20; i > 10; i--) P34.push(i);
+
+    betterStack<int> P;
+
+
+    betterStack<int>* P1, P2;
+    betterStack<int>* P3, P4;
+    
+    int buffSize = P12.size();
+    for (int i = 0; i < buffSize; i++) {
+        P.push(P12.top());
+        P12.pop();
+    }
+
+    buffSize = P34.size();
+    for (int i = 0; i < buffSize; i++) {
+        P.push(P34.top());
+        P34.pop();
+    }
+
+    buffSize = P.size();
+    for (int i = 0; i < buffSize; i++) {
+        P12.push(P.top());
+        P.pop();
+    }
+
+    buffSize = P12.size();
+    for (int i = 0; i < buffSize; i++) {
+        cout << P12.top() << endl;
+        P12.pop();
+    }
+}
