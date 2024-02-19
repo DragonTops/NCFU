@@ -1,0 +1,25 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    vector<double> vect;
+
+    for (int i = 0; i < 20; i++) {
+        vect.push_back(float(rand() % 100) / 10 + 1);
+    }
+    auto end = vect.end();
+    for (auto t = vect.begin(); t != vect.end();) {       //int i = 0; i < vect.size(); i++) {
+        if (*t - int(*t) > 0.5) {
+            t= vect.erase(t);
+        }
+        else {
+            ++t;
+        }
+    }
+    for (auto t : vect) {
+        cout << t << endl;
+    }
+}
