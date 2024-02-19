@@ -1,0 +1,30 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+struct student {
+	string name = "NULL";
+	float ball = -1;
+};
+
+stack <student> stck;
+
+template<typename T>
+T search(stack <T> stck, int id) {
+	stack <T> stck2(stck);
+	for (int i = 0; i < id-1; i++) {
+		stck2.pop();
+	}
+	return stck2.top();
+}
+
+int main()
+{
+	stck.push(student{ "BOB", 0.2 });
+	stck.push(student{ "Josh", 72.2 });
+	stck.push(student{ "Max", 100.2 });
+	stck.push(student{ "Sidney", 2.2 });
+
+	cout << search(stck, 2).name;
+}
